@@ -1,0 +1,53 @@
+'''
+This Python program takes a file with lines of integers 0-9
+and returns the number that occurs the least amount of times in
+the file. The program also returns a summary in the form of a
+dictionary with keys being an integer 0-9 and the values
+are the total count of that integer. Replace "numbers.txt" with
+your file path name.
+
+'''
+
+
+def createDictLeastOftenNumber(file):
+    dictOfNumbers = {}
+    countNum = 1
+    for record in file:
+        record = record.rstrip()
+        if record == "": break
+        for number in record:
+            key = number
+            if key not in dictOfNumbers:
+                dictOfNumbers[key] = countNum
+            elif key in dictOfNumbers:
+                dictOfNumbers[key] += countNum
+    return dictOfNumbers
+
+def leastOftenNumber(dictOfNums):
+    leastInt = 2500
+    smallestKey = 0
+    for key in dictOfNums.keys():
+        if dictOfNums[key] < leastInt:
+            leastInt = dictOfNums[key]
+            smallestKey = int(key)
+    return smallestKey
+
+
+def main():
+    filename = "numbers.txt"
+    try:
+        file = open(filename)
+    except:
+        print(f"{filename} did not open")
+        return
+    dictOfNums = createDictLeastOftenNumber(file)
+    leastOftenInt = leastOftenNumber(dictOfNums)
+    print(f"The integer from 0-9 to occur the least number of times\
+ in {filename} is: {leastOftenInt}")
+    print(f"The dictionary summary for integers 0-9 as keys and total count per integer\
+ as values is:\n\
+{dictOfNums}")
+    file.close()
+
+main()
+    
